@@ -1,5 +1,6 @@
 import { useState, useRef, useEffect } from 'react'
 import { useLocalStorage } from '../hooks/useLocalStorage'
+import { useResponsive } from '../hooks/useResponsive'
 import {
   Wallet, CheckSquare, CreditCard, GraduationCap, MapPin, Gamepad2,
   TrendingDown, ArrowRight, BarChart2, Target, ImageIcon, X, Plus,
@@ -332,6 +333,7 @@ function VibeBoard() {
 
 /* ── Dashboard ──────────────────────────────────────────────────────────── */
 export default function Dashboard() {
+  const { isMobile, isTablet } = useResponsive()
   const [tasks] = useLocalStorage('mk-tasks', [])
   const [expenses] = useLocalStorage('mk-expenses', [])
   const [subs] = useLocalStorage('mk-subscriptions', [])
@@ -393,7 +395,7 @@ export default function Dashboard() {
   return (
     <div className="page">
       {/* ── Header ── */}
-      <div style={{ marginBottom: 32, display: 'flex', alignItems: 'flex-end', justifyContent: 'space-between' }}>
+      <div style={{ marginBottom: 32, display: 'flex', alignItems: isMobile ? 'flex-start' : 'flex-end', justifyContent: 'space-between', flexDirection: isMobile ? 'column' : 'row', gap: isMobile ? 12 : 0 }}>
         <div>
           <div className="label" style={{ marginBottom: 6 }}>
             {now.toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric', year: 'numeric' })}
@@ -425,7 +427,7 @@ export default function Dashboard() {
       </div>
 
       {/* ── Stat cards ── */}
-      <div className="stagger" style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 12, marginBottom: 16 }}>
+      <div className="stagger" style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr 1fr' : 'repeat(3, 1fr)', gap: 12, marginBottom: 16 }}>
         <StatCard icon={Wallet} to="/finance" label="Remaining Budget"
           value={`${remaining.toFixed(0)} JOD`} sub={`${spent.toFixed(2)} JOD spent this month`} color={budgetColor} />
         <StatCard icon={CheckSquare} to="/tasks" label="Open Tasks"
@@ -441,7 +443,7 @@ export default function Dashboard() {
       </div>
 
       {/* ── Insights row ── */}
-      <div style={{ display: 'grid', gridTemplateColumns: '1fr 188px 188px', gap: 12, marginBottom: 16 }}>
+      <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : isTablet ? '1fr 1fr' : '1fr 188px 188px', gap: 12, marginBottom: 16 }}>
         <div className="card">
           <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 10 }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: 7 }}>
@@ -516,7 +518,7 @@ export default function Dashboard() {
       </div>
 
       {/* ── Personal row: Focus + Vibe Board ── */}
-      <div style={{ display: 'grid', gridTemplateColumns: '260px 1fr', gap: 12, marginBottom: 16 }}>
+      <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : '260px 1fr', gap: 12, marginBottom: 16 }}>
         <FocusCard />
         <VibeBoard />
       </div>
@@ -527,7 +529,7 @@ export default function Dashboard() {
       </div>
 
       {/* ── Bottom row ── */}
-      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12 }}>
+      <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : '1fr 1fr', gap: 12 }}>
         <QuickTask />
 
         <div className="card">

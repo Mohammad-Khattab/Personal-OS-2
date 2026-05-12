@@ -1,5 +1,6 @@
-import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
+import { BrowserRouter, Routes, Route, Navigate, useLocation } from 'react-router-dom'
 import { AuthProvider, useAuth } from './context/AuthContext'
+import { useState, useEffect } from 'react'
 import Sidebar from './components/shell/Sidebar'
 import TopBar from './components/shell/TopBar'
 import VoiceAssistant from './components/VoiceAssistant'
@@ -38,8 +39,12 @@ function LoadingScreen({ message = 'Loading…' }) {
   )
 }
 
-function AppShell() {
+function AppShellInner() {
   const { user, loading, syncing } = useAuth()
+  const [mobileNavOpen, setMobileNavOpen] = useState(false)
+  const location = useLocation()
+
+  useEffect(() => { setMobileNavOpen(false) }, [location.pathname])
 
   if (loading)  return <LoadingScreen message="INITIALIZING…" />
   if (syncing)  return <LoadingScreen message="SYNCING DATA…" />
@@ -47,9 +52,12 @@ function AppShell() {
 
   return (
     <div className="app-layout">
-      <Sidebar />
+      {mobileNavOpen && (
+        <div className="mobile-overlay" onClick={() => setMobileNavOpen(false)} />
+      )}
+      <Sidebar mobileOpen={mobileNavOpen} onMobileClose={() => setMobileNavOpen(false)} />
       <div className="main-area">
-        <TopBar />
+        <TopBar onMenuOpen={() => setMobileNavOpen(true)} />
         <div className="content-area">
           <Routes>
             <Route path="/"             element={<Navigate to="/dashboard" replace />} />
@@ -68,6 +76,10 @@ function AppShell() {
       <VoiceAssistant />
     </div>
   )
+}
+
+function AppShell() {
+  return <AppShellInner />
 }
 
 export default function App() {

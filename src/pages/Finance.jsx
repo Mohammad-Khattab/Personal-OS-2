@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { useLocalStorage } from '../hooks/useLocalStorage'
+import { useResponsive } from '../hooks/useResponsive'
 import {
   Plus, Trash2, TrendingUp, TrendingDown, Wallet,
   ShoppingCart, Coffee, Gamepad2, Zap, Car, X, CreditCard, BarChart2,
@@ -385,6 +386,7 @@ function ExpenseList({ expenses, onDelete }) {
 
 // ─── Main Finance Page ────────────────────────────────────────────────────────
 export default function Finance() {
+  const { isMobile, isTablet } = useResponsive()
   const [expenses, setExpenses] = useLocalStorage('mk-expenses', [])
   const [subs] = useLocalStorage('mk-subscriptions', [])
   const [settings, setSettings] = useLocalStorage('mk-settings', { allowance: 150, currency: 'JOD' })
@@ -444,7 +446,7 @@ export default function Finance() {
       </div>
 
       {/* ── Stat Cards ── */}
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 12, marginBottom: 20 }}>
+      <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr 1fr' : isTablet ? 'repeat(2, 1fr)' : 'repeat(4, 1fr)', gap: 12, marginBottom: 20 }}>
         <StatCard
           icon={Wallet}
           label="Remaining"
@@ -589,7 +591,7 @@ export default function Finance() {
       </div>
 
       {/* ── Bottom Grid: Category Breakdown + Expense List ── */}
-      <div style={{ display: 'grid', gridTemplateColumns: '340px 1fr', gap: 16, alignItems: 'start' }}>
+      <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : '340px 1fr', gap: 16, alignItems: 'start' }}>
 
         {/* Category Breakdown */}
         <div className="card">

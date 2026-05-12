@@ -38,11 +38,11 @@ const NAV = [
   },
 ]
 
-export default function Sidebar() {
+export default function Sidebar({ mobileOpen = false, onMobileClose }) {
   const [collapsed, setCollapsed] = useLocalStorage('mk-sidebar-collapsed', false)
 
   return (
-    <aside className={`sidebar${collapsed ? ' collapsed' : ''}`}>
+    <aside className={`sidebar${collapsed ? ' collapsed' : ''}${mobileOpen ? ' mobile-open' : ''}`}>
 
       {/* ── Logo ──────────────────────────────────────────────────────────── */}
       <div

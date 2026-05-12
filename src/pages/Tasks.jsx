@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { useLocalStorage } from '../hooks/useLocalStorage'
+import { useResponsive } from '../hooks/useResponsive'
 import {
   CheckSquare, Square, Trash2, Plus, X, Calendar, Tag, Flag,
   ClipboardList,
@@ -205,6 +206,7 @@ function TaskRow({ task, onToggle, onDelete }) {
 const FILTERS = ['All', 'Active', 'Completed', 'High', 'Medium', 'Low']
 
 export default function Tasks() {
+  const { isMobile } = useResponsive()
   const [tasks, setTasks] = useLocalStorage('mk-tasks', [])
   const [filter, setFilter] = useState('All')
   const [showModal, setShowModal] = useState(false)
@@ -263,7 +265,7 @@ export default function Tasks() {
 
       {/* ── Insights ── */}
       {tasks.length > 0 && (
-        <div style={{ display: 'grid', gridTemplateColumns: '148px 1fr', gap: 12, marginBottom: 20 }}>
+        <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : '148px 1fr', gap: 12, marginBottom: 20 }}>
           {/* Completion ring */}
           <div className="card" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: 10 }}>
             <span style={{ fontFamily: 'var(--font-mono)', fontSize: 9, color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '0.1em' }}>

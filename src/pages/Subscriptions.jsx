@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { useLocalStorage } from '../hooks/useLocalStorage'
+import { useResponsive } from '../hooks/useResponsive'
 import {
   CreditCard, Plus, X, Pencil, Trash2, ToggleLeft, ToggleRight,
   TrendingUp, Layers, ChevronDown, ChevronUp,
@@ -204,6 +205,7 @@ function SubRow({ sub, onEdit, onToggle, onDelete }) {
 }
 
 export default function Subscriptions() {
+  const { isMobile } = useResponsive()
   const [subs, setSubs] = useLocalStorage('mk-subscriptions', [])
   const [modal, setModal] = useState(null)
   const [sortAsc, setSortAsc] = useState(false)
@@ -270,7 +272,7 @@ export default function Subscriptions() {
       </div>
 
       {/* Stats row */}
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 12, marginBottom: 20 }}>
+      <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : 'repeat(3, 1fr)', gap: 12, marginBottom: 20 }}>
         {[
           {
             label: 'Total / Month',
@@ -317,7 +319,7 @@ export default function Subscriptions() {
             </span>
           </div>
 
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 148px', gap: 20, alignItems: 'center' }}>
+          <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : '1fr 148px', gap: 20, alignItems: 'center' }}>
             {/* Bars */}
             <div style={{ display: 'flex', flexDirection: 'column', gap: 0 }}>
               {Object.entries(byCategory)

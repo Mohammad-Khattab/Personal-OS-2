@@ -1,5 +1,5 @@
 import { useLocation } from 'react-router-dom'
-import { Search } from 'lucide-react'
+import { Search, Menu } from 'lucide-react'
 
 const TITLES = {
   '/dashboard': { label: 'Dashboard', sub: 'Your command center' },
@@ -13,7 +13,7 @@ const TITLES = {
   '/places': { label: 'Places', sub: 'Places to visit' },
 }
 
-export default function TopBar() {
+export default function TopBar({ onMenuOpen }) {
   const { pathname } = useLocation()
   const info = TITLES[pathname] || { label: 'MKHUB', sub: '' }
   const now = new Date()
@@ -22,6 +22,9 @@ export default function TopBar() {
 
   return (
     <header className="topbar">
+      <button className="btn-icon mobile-menu-btn" onClick={onMenuOpen} title="Open menu">
+        <Menu size={18} />
+      </button>
       <div style={{ flex: 1 }}>
         <span style={{ fontFamily: 'var(--font-display)', fontWeight: 700, fontSize: 15, color: 'var(--text-primary)' }}>
           {info.label}
