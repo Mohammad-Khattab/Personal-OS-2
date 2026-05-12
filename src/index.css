@@ -834,4 +834,108 @@
   .focus-card:hover {
     box-shadow: var(--shadow-md), 0 0 0 1px rgba(2,132,199,0.14);
   }
+
+  /* ── Emails Box ──────────────────────────────────── */
+
+  .emails-list {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    max-height: 340px;
+    overflow-y: auto;
+    margin: 0 -4px;
+    padding: 0 4px;
+  }
+
+  .emails-list::-webkit-scrollbar { width: 4px; }
+  .emails-list::-webkit-scrollbar-track { background: transparent; }
+  .emails-list::-webkit-scrollbar-thumb { background: var(--border); border-radius: 4px; }
+
+  .email-item {
+    position: relative;
+    display: block;
+    padding: 9px 10px 9px 14px;
+    border-radius: 7px;
+    border: 1px solid transparent;
+    text-decoration: none;
+    transition: background 0.15s ease, border-color 0.15s ease;
+    cursor: pointer;
+  }
+
+  .email-item:hover {
+    background: var(--bg-base);
+    border-color: var(--border);
+  }
+
+  .email-item.unread {
+    background: rgba(2, 132, 199, 0.04);
+    border-color: rgba(2, 132, 199, 0.12);
+  }
+
+  .email-item.unread:hover {
+    background: rgba(2, 132, 199, 0.08);
+    border-color: rgba(2, 132, 199, 0.22);
+  }
+
+  .email-unread-dot {
+    position: absolute;
+    left: 4px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: var(--accent);
+    flex-shrink: 0;
+  }
+
+  .email-meta {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    margin-bottom: 2px;
+  }
+
+  .email-from {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--text-primary);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 200px;
+  }
+
+  .email-time {
+    font-family: var(--font-mono);
+    font-size: 9px;
+    color: var(--text-muted);
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+
+  .email-subject {
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--text-secondary);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    margin-bottom: 2px;
+  }
+
+  .email-item.unread .email-subject {
+    color: var(--text-primary);
+    font-weight: 600;
+  }
+
+  .email-snippet {
+    font-size: 11px;
+    color: var(--text-muted);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    line-height: 1.4;
+  }
 }

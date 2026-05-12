@@ -6,6 +6,7 @@ import {
 } from 'lucide-react'
 import { Link } from 'react-router-dom'
 import { DonutChart, SparkArea, RingCard, TC } from '../components/charts/Charts'
+import EmailsBox from '../components/EmailsBox'
 
 const COLORS = {
   cyan:   { icon: '0,200,255',   var: 'var(--accent)' },
@@ -518,6 +519,11 @@ export default function Dashboard() {
       <div style={{ display: 'grid', gridTemplateColumns: '260px 1fr', gap: 12, marginBottom: 16 }}>
         <FocusCard />
         <VibeBoard />
+      </div>
+
+      {/* ── Emails row ── */}
+      <div style={{ marginBottom: 16 }}>
+        <EmailsBox />
       </div>
 
       {/* ── Bottom row ── */}
